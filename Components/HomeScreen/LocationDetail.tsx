@@ -1,5 +1,5 @@
 import { Text, FlatList } from "react-native";
-import { Location } from "./API";
+import Location from "../../Models/Location";
 import CharacterLoader from "./CharacterLoader";
 
 type LocationProps = {
@@ -13,7 +13,7 @@ export default function LocationDetail({ location }: LocationProps) {
         horizontal={true}
         data={location.residents}
         renderItem={({ item }) => <CharacterLoader apiUrl={item} />}
-        keyExtractor={(item, index) => `${index}`}
+        keyExtractor={(item, index) => `${index}${item}`}
       />
     </>
   );

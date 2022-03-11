@@ -1,6 +1,5 @@
-import { useEffect } from "react";
-import { Text } from "react-native";
-import { Character, useCharacter } from "./API";
+import Character from "../../Models/Character";
+import useCharacter from "../../API/useCharacter";
 import CharacterPreview, { CharacterPreviewLoading } from "./CharacterPreview";
 
 type CharacterLoaderProps = {
