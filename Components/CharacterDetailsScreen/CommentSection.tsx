@@ -1,36 +1,89 @@
-import { useState, useEffect } from "react";
-import { Text, TextInput, TouchableOpacity } from "react-native";
-import useLocations from "../../API/useLocations";
+import { useState } from "react";
+import {
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  View,
+} from "react-native";
+import useComments from "../../API/useComments";
+import Comment from "../../Models/Comment";
 
-export default function CommentSection({ commentableId }) {
-  // export default function HomeScreen() {
-  const { locations, loadNext } = useLocations();
-  const [comments, setComments] = useState([]);
-  //   const [comments, setComments] = useState([]);
-  //   useEffect(() => {
-  //     (async () => {
-  //       const response = await fetch(
-  //         `https://jsonplaceholder.typicode.com/posts?userId=${1}`
-  //       );
-  //       const json = await response.json();
-  //       setComments(json);
-  //       console.warn(JSON.stringify(json));
-  //     })();
-  //   }, []);
+type CommentSectionProps = {
+  commentableId: string;
+};
 
-  //   const comments = [];
-  const post = () => {};
+export default function CommentSection({ commentableId }: CommentSectionProps) {
+  const { comments, addComment } = useComments(commentableId);
+
+  const [title, onChangeTitle] = useState("");
+  const [body, onChangeBody] = useState("");
+
+  const createComment = () => {
+    let comment: Comment = { title: title, body: body, userId: commentableId };
+    addComment(comment);
+  };
 
   return (
     <>
-      <Text>Comments:</Text>
-      {locations.map((comment) => (
-        <Text>{comment.name}</Text>
+      <View style={styles.addCommentSection}>
+        <Text style={styles.commentTitle}>Add a comment:</Text>
+        <TextInput
+          style={styles.comment}
+          placeholder="Comment Title"
+          value={title}
+          onChangeText={onChangeTitle}
+        />
+        <TextInput
+          multiline
+          numberOfLines={4}
+          style={styles.comment}
+          placeholder="Comment Body"
+          value={body}
+          onChangeText={onChangeBody}
+        />
+        <TouchableOpacity style={styles.button} onPress={createComment}>
+          <Text>Add Comment</Text>
+        </TouchableOpacity>
+      </View>
+      <Text style={styles.commentTitle}>Comments:</Text>
+      {comments.map((comment: Comment) => (
+        <View style={styles.comment}>
+          <Text style={styles.commentTitle}>{comment.title}</Text>
+          <Text>{comment.body}</Text>
+        </View>
       ))}
-      <TextInput />
-      <TouchableOpacity onPress={post}>
-        <Text>Add Comment</Text>
-      </TouchableOpacity>
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  addCommentSection: {
+    borderColor: "black",
+    borderWidth: 1,
+    borderRadius: 4,
+    backgroundColor: "#ddd",
+    padding: 4,
+    margin: 4,
+  },
+  button: {
+    backgroundColor: "steelblue",
+    padding: 8,
+    margin: 4,
+    alignItems: "center",
+    borderRadius: 4,
+  },
+  comment: {
+    backgroundColor: "white",
+    fontSize: 12,
+    borderColor: "black",
+    borderWidth: 1,
+    margin: 4,
+    padding: 4,
+    borderRadius: 4,
+    alignSelf: "stretch",
+  },
+  commentTitle: {
+    fontWeight: "600",
+  },
+});
