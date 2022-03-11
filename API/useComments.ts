@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Alert } from "react-native";
 import Comment from "../Models/Comment";
 
 const useComments = (commentableId: string) => {
@@ -10,7 +11,6 @@ const useComments = (commentableId: string) => {
       );
       const json = await response.json();
       setComments(json);
-      console.warn(JSON.stringify(json));
     })();
   }, []);
 
@@ -30,8 +30,14 @@ const useComments = (commentableId: string) => {
           },
         }
       );
-      const json = await response.json();
-      console.warn(JSON.stringify(json));
+
+      if (!response.ok) {
+        Alert.alert("Uh oh! We couldn't save your comment!");
+        return;
+      }
+
+      const json = (await response.json()) as Comment;
+      setComments((prev) => [json, ...prev]);
     })();
   };
 

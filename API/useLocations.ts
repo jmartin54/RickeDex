@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Alert } from "react-native";
 import Location from "../Models/Location";
 import LocationRequestInfo from "../Models/LocationRequestInfo";
 
@@ -11,10 +12,10 @@ const useLocations = () => {
   }, []);
 
   const load = async (url: string) => {
-    const res = await fetch(url);
-    const json = await res.json();
-    // setLocations((prev) => [...prev, ...json.results]); // TODO: this could cause problems
-    setLocations(json.results);
+    setInfo(null);
+    const response = await fetch(url);
+    const json = await response.json();
+    setLocations((prev) => [...prev, ...json.results]);
     setInfo(json.info);
   };
 

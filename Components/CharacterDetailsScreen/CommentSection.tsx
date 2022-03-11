@@ -22,6 +22,8 @@ export default function CommentSection({ commentableId }: CommentSectionProps) {
   const createComment = () => {
     let comment: Comment = { title: title, body: body, userId: commentableId };
     addComment(comment);
+    onChangeTitle("");
+    onChangeBody("");
   };
 
   return (
@@ -47,8 +49,8 @@ export default function CommentSection({ commentableId }: CommentSectionProps) {
         </TouchableOpacity>
       </View>
       <Text style={styles.commentTitle}>Comments:</Text>
-      {comments.map((comment: Comment) => (
-        <View style={styles.comment}>
+      {comments.map((comment: Comment, i) => (
+        <View style={styles.comment} key={`${comment.id}${comment.userId}${i}`}>
           <Text style={styles.commentTitle}>{comment.title}</Text>
           <Text>{comment.body}</Text>
         </View>

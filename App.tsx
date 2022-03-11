@@ -9,10 +9,17 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: "RickeDex" }}
+        />
         <Stack.Screen
           name="CharacterDetails"
           component={CharacterDetailsScreen}
+          options={({ route }) => ({
+            title: route.params?.character.name ?? "Character Details",
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>
