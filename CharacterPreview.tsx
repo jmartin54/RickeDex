@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import {
   Alert,
@@ -13,9 +14,11 @@ type CharacterPreviewProps = {
 };
 
 export default function CharacterPreview({ character }: CharacterPreviewProps) {
+  const navigation = useNavigation();
+
   return (
     <TouchableOpacity
-      onPress={() => Alert.alert(character.name)}
+      onPress={() => navigation.navigate("CharacterDetails", { character })}
       style={styles.container}
     >
       <Image source={{ uri: character.image }} style={styles.image} />
