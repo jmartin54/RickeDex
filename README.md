@@ -1,5 +1,5 @@
 # RickeDex
-*buurpp* list mmmorty
+*buurpp* listen mmmorty
 
 A React Native Project to list and view Rick and Morty characters
 
