@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Text, TextInput, TouchableOpacity } from "react-native";
-import { useLocations } from "../../API";
+import useLocations from "../../API/useLocations";
 
 export default function CommentSection({ commentableId }) {
   // export default function HomeScreen() {
