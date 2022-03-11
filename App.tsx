@@ -1,27 +1,31 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import useLocations from "./API";
+import {
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useLocations } from "./API";
 import LocationDetail from "./Location";
 
 export default function App() {
-  const { locations, info, loadPrev, loadNext } = useLocations();
+  const { locations, loadNext } = useLocations();
   return (
-    <View style={styles.container}>
-      {info?.prev && (
-        <TouchableOpacity onPress={loadPrev} style={styles.button}>
-          <Text>Load Previous Page</Text>
-        </TouchableOpacity>
-      )}
-      {locations.map((location) => {
-        return <LocationDetail location={location} />;
-      })}
-      {info?.next && (
-        <TouchableOpacity onPress={loadNext} style={styles.button}>
-          <Text>Load Next Page</Text>
-        </TouchableOpacity>
-      )}
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={locations}
+        keyExtractor={(item) => `${item.id}`}
+        renderItem={({ item }) => (
+          <LocationDetail key={item.id} location={item} />
+        )}
+        onEndReached={() => {
+          loadNext();
+        }}
+      />
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 

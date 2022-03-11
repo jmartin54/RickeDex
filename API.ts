@@ -1,8 +1,20 @@
 import { useEffect, useState } from "react";
 
 export type Character = {
+  id: number;
   name: string;
+  status: string;
+  species: string;
+  type: string;
+  gender: string;
+  origin: Location;
+  location: Location;
+  image: string;
+  episode: string[];
+  url: string;
+  created: string;
 };
+
 export type Location = {
   id: number;
   name: string;
@@ -31,8 +43,8 @@ const useLocations = () => {
   const load = async (url: string) => {
     const res = await fetch(url);
     const json = await res.json();
-    // setLocations((prev) => [...prev, ...json.results]);
-    setLocations(json.results);
+    setLocations((prev) => [...prev, ...json.results]); // TODO: this could cause problems
+    // setLocations(json.results);
     setInfo(json.info);
   };
 
@@ -47,4 +59,16 @@ const useLocations = () => {
   return { info, locations, loadPrev, loadNext };
 };
 
-export default useLocations;
+const useCharacter = (characterUrl: string) => {
+  const [character, setCharacter] = useState<Character | null>(null);
+  useEffect(() => {
+    (async () => {
+      const res = await fetch(characterUrl);
+      const json = await res.json();
+      setCharacter(json);
+    })();
+  }, []);
+  return character;
+};
+
+export { useLocations, useCharacter };
