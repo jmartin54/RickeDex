@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { KeyboardAvoidingView } from "react-native";
+import { FlatList, KeyboardAvoidingView } from "react-native";
 import {
   SafeAreaView,
   ScrollView,
@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import CommentSection from "../Components/CharacterDetailsScreen/CommentSection";
+import EpisodePreview from "../Components/CharacterDetailsScreen/EpisodePreview";
 
 export default function CharacterDetailsScreen({ route }) {
   const { character } = route.params;
@@ -30,10 +31,13 @@ export default function CharacterDetailsScreen({ route }) {
             <Text>ORIGIN: {character.origin.name ?? "Unknown"}</Text>
             <Text>LOCATION: {character.location.name ?? "Unknown"}</Text>
             <Text>EPISODES: </Text>
-            {character.episode &&
-              character.episode.map((url: string) => (
-                <Text key={url}>{url}</Text>
-              ))}
+            <FlatList
+              showsHorizontalScrollIndicator={false}
+              horizontal={true}
+              data={character.episode}
+              keyExtractor={(item) => item}
+              renderItem={({ item }) => <EpisodePreview url={item} />}
+            />
             <CommentSection commentableId={character.id} />
           </View>
         </ScrollView>
