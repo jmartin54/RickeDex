@@ -8,7 +8,7 @@ type LocationProps = {
 export default function LocationDetail({ location }: LocationProps) {
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 25, marginTop: 15 }}>{location.name}</Text>
+      <Text style={styles.header}>{location.name}</Text>
       {location.residents.length == 0 && <Text> No residents</Text>}
       <FlatList
         showsHorizontalScrollIndicator={false}
@@ -22,7 +22,8 @@ export default function LocationDetail({ location }: LocationProps) {
 }
 
 const styles = StyleSheet.create({
+  header: { fontSize: 20, marginTop: 15 },
   container: {
-    height: 150,
+    height: 170,
   },
 });

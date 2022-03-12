@@ -34,6 +34,6 @@ export function CharacterPreviewLoading() {
 const styles = StyleSheet.create({
   container: { padding: 4 },
   loading: { backgroundColor: "#eee", margin: 4 },
-  image: { width: 70, height: 70, borderRadius: 10 },
-  text: { width: 70, fontSize: 12 },
+  image: { width: 80, height: 70, borderRadius: 10 },
+  text: { width: 80, fontSize: 12 },
 });
