@@ -1,6 +1,6 @@
 import { Text, FlatList, StyleSheet, View } from "react-native";
 import Location from "../../Models/Location";
-import CharacterLoader from "./CharacterLoader";
+import CharacterPreview from "./CharacterPreview";
 
 type LocationProps = {
   location: Location;
@@ -14,7 +14,7 @@ export default function LocationDetail({ location }: LocationProps) {
         showsHorizontalScrollIndicator={false}
         horizontal={true}
         data={location.residents}
-        renderItem={({ item }) => <CharacterLoader apiUrl={item} />}
+        renderItem={({ item }) => <CharacterPreview character={item} />}
         keyExtractor={(item, index) => `${index}${item}`}
       />
     </View>

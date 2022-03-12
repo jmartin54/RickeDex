@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Alert } from "react-native";
+import loadCharacters from "./useCharacter";
 import Location from "../Models/Location";
 import LocationRequestInfo from "../Models/LocationRequestInfo";
 
@@ -12,11 +12,20 @@ const useLocations = () => {
   }, []);
 
   const load = async (url: string) => {
-    setInfo(null);
-    const response = await fetch(url);
-    const json = await response.json();
-    setLocations((prev) => [...prev, ...json.results]);
-    setInfo(json.info);
+    try {
+      setInfo(null);
+      const response = await fetch(url);
+      const json = await response.json();
+      for (var i in json.results) {
+        json.results[i].residents = await loadCharactersForLocation(
+          json.results[i]
+        );
+      }
+      setLocations((prev) => [...prev, ...json.results]);
+      setInfo(json.info);
+    } catch (err) {
+      console.warn(err);
+    }
   };
 
   const loadPrev = () => {
@@ -28,6 +37,19 @@ const useLocations = () => {
   };
 
   return { info, locations, loadPrev, loadNext };
+};
+
+const loadCharactersForLocation = async (location: Location) => {
+  const characterIds = characterIdsFromResidentUrl(location.residents);
+  const characters = await loadCharacters(characterIds);
+  return characters;
+};
+
+const characterIdsFromResidentUrl = (residents: [string | number]) => {
+  return residents.map(
+    (resident) =>
+      resident.replace("https://rickandmortyapi.com/api/character/", "") * 1
+  );
 };
 
 export default useLocations;

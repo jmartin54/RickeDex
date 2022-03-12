@@ -1,9 +1,11 @@
+import Character from "./Character";
+
 type Location = {
   id: number;
   name: string;
   type: string;
   dimension: string;
-  residents: [string];
+  residents: [Character];
   url: string;
   created: string;
 };

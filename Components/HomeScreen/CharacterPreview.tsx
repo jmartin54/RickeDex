@@ -26,11 +26,6 @@ export default function CharacterPreview({ character }: CharacterPreviewProps) {
     </TouchableOpacity>
   );
 }
-
-export function CharacterPreviewLoading() {
-  return <View style={[styles.image, styles.loading]}></View>;
-}
-
 const styles = StyleSheet.create({
   container: { padding: 4 },
   loading: { backgroundColor: "#eee", margin: 4 },

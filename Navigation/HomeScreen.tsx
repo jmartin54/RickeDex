@@ -14,18 +14,22 @@ export default function HomeScreen() {
   const { locations, loadNext } = useLocations();
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        data={locations}
-        keyExtractor={(item, index) => `${index}${item.id}`}
-        renderItem={({ item }) => <LocationDetail location={item} />}
-        ListFooterComponent={() => {
-          return (
-            <TouchableOpacity style={styles.button} onPress={loadNext}>
-              <Text>Load Next Page</Text>
-            </TouchableOpacity>
-          );
-        }}
-      />
+      {locations.length == 0 ? (
+        <Text>Loading... mmorties and *brup* rickss</Text>
+      ) : (
+        <FlatList
+          data={locations}
+          keyExtractor={(item, index) => `${index}${item.id}`}
+          renderItem={({ item }) => <LocationDetail location={item} />}
+          ListFooterComponent={() => {
+            return (
+              <TouchableOpacity style={styles.button} onPress={loadNext}>
+                <Text>Load Next Page</Text>
+              </TouchableOpacity>
+            );
+          }}
+        />
+      )}
       <StatusBar style="auto" />
     </SafeAreaView>
   );
