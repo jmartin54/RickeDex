@@ -20,8 +20,8 @@ export default function HomeScreen() {
         renderItem={({ item }) => <LocationDetail location={item} />}
         ListFooterComponent={() => {
           return (
-            <TouchableOpacity style={styles.button}>
-              <Text onPress={loadNext}>Load Next Page</Text>
+            <TouchableOpacity style={styles.button} onPress={loadNext}>
+              <Text>Load Next Page</Text>
             </TouchableOpacity>
           );
         }}
@@ -43,6 +43,8 @@ const styles = StyleSheet.create({
     padding: 8,
     margin: 4,
     alignItems: "center",
+    justifyContent: "center",
     borderRadius: 4,
+    height: 50,
   },
 });
