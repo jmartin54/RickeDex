@@ -11,7 +11,7 @@ import useLocations from "../API/useLocations";
 import LocationDetail from "../Components/HomeScreen/LocationDetail";
 
 export default function HomeScreen() {
-  const { locations, loadNext } = useLocations();
+  const { locations, info, loadNext } = useLocations();
   return (
     <SafeAreaView style={styles.container}>
       {locations.length == 0 ? (
@@ -22,10 +22,12 @@ export default function HomeScreen() {
           keyExtractor={(item, index) => `${index}${item.id}`}
           renderItem={({ item }) => <LocationDetail location={item} />}
           ListFooterComponent={() => {
-            return (
+            return info !== null && info.next !== undefined ? (
               <TouchableOpacity style={styles.button} onPress={loadNext}>
                 <Text>Load Next Page</Text>
               </TouchableOpacity>
+            ) : (
+              <></>
             );
           }}
         />
