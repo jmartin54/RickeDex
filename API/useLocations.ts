@@ -17,9 +17,11 @@ const useLocations = () => {
       const response = await fetch(url);
       const json = await response.json();
       for (var i in json.results) {
-        json.results[i].residents = await loadCharactersForLocation(
-          json.results[i]
-        );
+        if (json.results[i].residents.length > 0) {
+          json.results[i].residents = await loadCharactersForLocation(
+            json.results[i]
+          );
+        }
       }
       setLocations((prev) => [...prev, ...json.results]);
       setInfo(json.info);
